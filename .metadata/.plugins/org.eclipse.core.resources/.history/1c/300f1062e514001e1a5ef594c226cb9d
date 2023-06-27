@@ -106,9 +106,7 @@ int main(void)
 	  for (uint8_t i = 0; i < 3; i++)
 	  {
 		  HAL_GPIO_TogglePin(GPIOB, ledArray[i]);
-		  HAL_Delay(delayTime);
-		  HAL_GPIO_TogglePin(GPIOB, ledArray[i]);
-		  HAL_Delay(delayTime);
+		  HAL_Delay(200);
 	  }
     /* USER CODE BEGIN 3 */
   }

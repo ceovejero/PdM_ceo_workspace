@@ -173,3 +173,63 @@ arm-none-eabi-size   Practica1p1.elf
   11880	     20	   2932	  14832	   39f0	Practica1p1.elf
 Finished building: default.size.stdout
  
+09:22:52 **** Incremental Build of configuration Debug for project Practica1p1 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F413xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:82:11: warning: unused variable 'delayTime' [-Wunused-variable]
+   82 |   uint8_t delayTime = 200;
+      |           ^~~~~~~~~
+arm-none-eabi-gcc -o "Practica1p1.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/ceo/STM32Cube/PdM_ceo_workspace/Practica1p1/STM32F413ZHTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Practica1p1.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Practica1p1.elf
+ 
+arm-none-eabi-size   Practica1p1.elf 
+arm-none-eabi-objdump -h -S  Practica1p1.elf  > "Practica1p1.list"
+   text	   data	    bss	    dec	    hex	filename
+  11944	     20	   2932	  14896	   3a30	Practica1p1.elf
+Finished building: default.size.stdout
+ 
+Finished building: Practica1p1.list
+ 
+09:23:12 **** Incremental Build of configuration Debug for project Practica1p1 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F413xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "Practica1p1.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/ceo/STM32Cube/PdM_ceo_workspace/Practica1p1/STM32F413ZHTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Practica1p1.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Practica1p1.elf
+ 
+arm-none-eabi-size   Practica1p1.elf 
+arm-none-eabi-objdump -h -S  Practica1p1.elf  > "Practica1p1.list"
+   text	   data	    bss	    dec	    hex	filename
+  11944	     20	   2932	  14896	   3a30	Practica1p1.elf
+Finished building: default.size.stdout
+ 
+Finished building: Practica1p1.list
+ 
+09:23:17 **** Incremental Build of configuration Debug for project Practica1p1 ****
+make -j8 all 
+arm-none-eabi-size   Practica1p1.elf 
+   text	   data	    bss	    dec	    hex	filename
+  11944	     20	   2932	  14896	   3a30	Practica1p1.elf
+Finished building: default.size.stdout
+ 
+09:24:06 **** Incremental Build of configuration Debug for project Practica1p1 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F413xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "Practica1p1.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/ceo/STM32Cube/PdM_ceo_workspace/Practica1p1/STM32F413ZHTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Practica1p1.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Practica1p1.elf
+ 
+arm-none-eabi-size   Practica1p1.elf 
+arm-none-eabi-objdump -h -S  Practica1p1.elf  > "Practica1p1.list"
+   text	   data	    bss	    dec	    hex	filename
+  11972	     20	   2932	  14924	   3a4c	Practica1p1.elf
+Finished building: default.size.stdout
+ 
+Finished building: Practica1p1.list
+ 
+09:24:09 **** Incremental Build of configuration Debug for project Practica1p1 ****
+make -j8 all 
+arm-none-eabi-size   Practica1p1.elf 
+   text	   data	    bss	    dec	    hex	filename
+  11972	     20	   2932	  14924	   3a4c	Practica1p1.elf
+Finished building: default.size.stdout
+ 

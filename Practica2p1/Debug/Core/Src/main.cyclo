@@ -1,0 +1,9 @@
+main.c:73:5:main	1
+main.c:123:6:SystemClock_Config	3
+main.c:170:13:MX_USART3_UART_Init	2
+main.c:203:13:MX_USB_OTG_FS_PCD_Init	2
+main.c:239:13:MX_GPIO_Init	1
+main.c:293:6:delayInit	1
+main.c:299:8:delayRead	3
+main.c:321:6:delayWrite	1
+main.c:337:6:Error_Handler	1

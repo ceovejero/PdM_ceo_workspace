@@ -3594,3 +3594,6 @@ Command-line arguments:  -os linux -ws gtk -arch x86_64
 
 !ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2023-07-11 00:03:23.990
 !MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 96000000; div: 48
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2023-07-11 01:13:50.683
+!MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 96000000; div: 48

@@ -330,8 +330,6 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
-  /* Si un error ocurre el USER LED RED permanece encendido*/
-	HAL_GPIO_WritePin(GPIOB, LD3_Pin, GPIO_PIN_SET);
   __disable_irq();
   while (1)
   {

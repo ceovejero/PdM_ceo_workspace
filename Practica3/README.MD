@@ -29,10 +29,5 @@ En `API_delay.c` se debe ubicar la implementación de todas las funciones.
 **NOTA:** cuando se agregan carpetas a un proyecto de eclipse se deben incluir en el *include path* para que se incluya su contenido en la compilación. Se debe hacer clic derecho sobre la carpeta con los archivos de encabezamiento y seleccionar la opción `add/remove include path`.
 
 ## Punto 2
-<<<<<<< HEAD
 Implementar un programa que utilice retardos no bloqueantes y haga titilar en forma periódica e independiente los tres leds de la placa NUCLEO-F413ZH de acuerdo a una secuencia predeterminada como en la **práctica 01**.
-=======
-Implementar un programa que utilice retardos no bloqueantes y haga titilar en forma periódica e independiente los tres leds de la placa NUCLEO-F413ZH de acuerdo a una secuencia predeterminada como en la [práctica 01](https://github.com/lmsoria/cese-pdm-workspace/tree/main/practica-01).
->>>>>>> main
-
 Cada led debe permanecer encendido 200 ms. No debe encenderse más de un led simultáneamente en ningún momento.

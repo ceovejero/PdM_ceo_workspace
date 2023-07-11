@@ -130,16 +130,16 @@ int main(void)
   {
     /* USER CODE END WHILE */
 
-	  if ( delayRead(&ledTimed[ledPoint]) )  //si delayRead devuelve True, se cumple el perido preestablecido
+	  if ( delayRead(&ledTimed[ledPoint]) )
 	  	  {
 	  	  	  HAL_GPIO_TogglePin(GPIOB, ledPinArray[ledPoint]);
 	  	  	  toggleCounter++;
 	  	  }
-	  if (toggleCounter==2)  // la cuenta toggleCounter permite cambiar al control de led siguiente
+	  if (toggleCounter==2)
 	  	  {
 		  	  toggleCounter=0;
 		  	  ledPoint++;
-		  	  if(ledPoint>2)	// reinicio hacia el primer led.
+		  	  if(ledPoint>2)
 		  		  ledPoint=0;
 	  	  }
 

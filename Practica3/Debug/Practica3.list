@@ -420,7 +420,7 @@ int main(void)
   {
     /* USER CODE END WHILE */
 
-	  if ( delayRead(&ledTimed[ledPoint]) )
+	  if ( delayRead(&ledTimed[ledPoint]) )  //si delayRead devuelve True, se cumple el perido preestablecido
  8000566:	4b1c      	ldr	r3, [pc, #112]	; (80005d8 <main+0xbc>)
  8000568:	781b      	ldrb	r3, [r3, #0]
  800056a:	461a      	mov	r2, r3
@@ -453,7 +453,7 @@ int main(void)
  80005a0:	4b10      	ldr	r3, [pc, #64]	; (80005e4 <main+0xc8>)
  80005a2:	701a      	strb	r2, [r3, #0]
 	  	  }
-	  if (toggleCounter==2)
+	  if (toggleCounter==2)  // la cuenta toggleCounter permite cambiar al control de led siguiente
  80005a4:	4b0f      	ldr	r3, [pc, #60]	; (80005e4 <main+0xc8>)
  80005a6:	781b      	ldrb	r3, [r3, #0]
  80005a8:	2b02      	cmp	r3, #2
@@ -470,7 +470,7 @@ int main(void)
  80005b8:	b2da      	uxtb	r2, r3
  80005ba:	4b07      	ldr	r3, [pc, #28]	; (80005d8 <main+0xbc>)
  80005bc:	701a      	strb	r2, [r3, #0]
-		  	  if(ledPoint>2)
+		  	  if(ledPoint>2)	// reinicio hacia el primer led.
  80005be:	4b06      	ldr	r3, [pc, #24]	; (80005d8 <main+0xbc>)
  80005c0:	781b      	ldrb	r3, [r3, #0]
  80005c2:	2b02      	cmp	r3, #2
@@ -479,7 +479,7 @@ int main(void)
  80005c6:	4b04      	ldr	r3, [pc, #16]	; (80005d8 <main+0xbc>)
  80005c8:	2200      	movs	r2, #0
  80005ca:	701a      	strb	r2, [r3, #0]
-	  if ( delayRead(&ledTimed[ledPoint]) )
+	  if ( delayRead(&ledTimed[ledPoint]) )  //si delayRead devuelve True, se cumple el perido preestablecido
  80005cc:	e7cb      	b.n	8000566 <main+0x4a>
  80005ce:	bf00      	nop
  80005d0:	2000058c 	.word	0x2000058c

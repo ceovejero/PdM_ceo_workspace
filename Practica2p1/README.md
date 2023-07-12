@@ -22,4 +22,23 @@ void delayWrite( delay_t * delay, tick_t duration );
 ```
 
 En `main.c` se deben ubicar la implementación de todas las funciones:
+
 Consideraciones para la implementación:
+
+1.	`delayInit` debe cargar el valor de duración del retardo en la estructura, en el campo correspondiente. No debe iniciar el conteo del retardo. Debe inicializar el **flag** *running* en `false`.
+2.	`delayRead` debe verificar el estado del **flag** *running*.
+   - `false`, tomar marca de tiempo y cambiar *running* a `true` 
+   - `true`, hacer la cuenta para saber si el tiempo del retardo se cumplió o no:
+     `marca de tiempo actual - marca de tiempo inicial es mayor o igual a duración del retardo`?
+         y devolver un valor booleano que indique si el tiempo se cumplió o no.
+   - Cuando el tiempo se cumple se debe cambiar el **flag** *running* a `false`.
+3.	`delayWrite` debe permitir cambiar el tiempo de duración de un *delay* existente
+
+NOTA: para obtener una marca de tiempo se puede usar la función `HAL_GetTick()` que devuelve un valor que se incrementa cada **1 ms** y que se puede usar como base de tiempo.
+
+## Punto 2
+Implementar un programa que utilice retardos no bloqueantes y haga titilar en forma periódica e independiente los tres leds de la placa **NUCLEO-F413ZH** de la siguiente manera:
+
+* LED1: 100 ms. 
+* LED2: 500 ms.
+* LED3: 1000 ms.

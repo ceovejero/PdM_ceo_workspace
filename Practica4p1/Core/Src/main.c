@@ -340,7 +340,6 @@ void debounceFSM_update()
 	switch (estadoActual)
 		{
 			case BUTTON_UP:
-					//buttonReleased();
 					if (BSP_PB_GetState(BUTTON_USER))
 						{
 							estadoActual = BUTTON_FALLING; //estado siguiente

@@ -7,6 +7,7 @@ Implementar un MEF para trabajar con anti-rebotes por software.
 Crear un nuevo proyecto como copia del proyecto realizado para la práctica 3.
 
 Implementar una MEF anti-rebote que permita leer el estado del pulsador de la placa NUCLEO-F413ZH y generar acciones o eventos ante un flanco descendente o ascendente, de acuerdo al siguiente diagrama:
+
 ![](./img/debounceFsm.png)
 
 El estado inicial de la MEF debe ser `BUTTON_UP`.

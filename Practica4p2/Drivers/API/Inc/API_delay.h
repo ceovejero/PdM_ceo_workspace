@@ -8,8 +8,7 @@
 #ifndef API_INC_API_DELAY_H_
 #define API_INC_API_DELAY_H_
 
-#include "stdint.h"
-#include "stdbool.h"
+#include "API_header.h"
 
 
 typedef uint32_t tick_t;
@@ -28,5 +27,11 @@ void delayInit( delay_t * delay, tick_t duration );
 bool_t delayRead( delay_t * delay );
 void delayWrite( delay_t * delay, tick_t duration );
 /* ========== ============================ ========== */
+
+/**
+  * @brief  This function is executed in case of error occurrence.
+  * @retval None
+  */
+void ErrorHandler(void);
 
 #endif /* API_INC_API_DELAY_H_ */

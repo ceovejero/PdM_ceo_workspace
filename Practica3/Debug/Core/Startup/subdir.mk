@@ -16,7 +16,7 @@ S_DEPS += \
 
 # Each subdirectory must supply rules for building sources it contributes
 Core/Startup/%.o: ../Core/Startup/%.s Core/Startup/subdir.mk
-	arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -I"D:/Users/CEO/STM32CubeIDE/PdM_ceo_workspace/Practica3/Drivers/BSP/STM32F4xx_Nucleo_144" -I"D:/Users/CEO/STM32CubeIDE/PdM_ceo_workspace/Practica3/Drivers/BSP/STM32F4xx_Nucleo_144/_htmresc" -I"D:/Users/CEO/STM32CubeIDE/PdM_ceo_workspace/Practica3/Drivers/API/Inc" -I"D:/Users/CEO/STM32CubeIDE/PdM_ceo_workspace/Practica3/Drivers/API/Src" -x assembler-with-cpp -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "$@" "$<"
+	arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -I"/home/ceo/STM32Cube/PdM_ceo_workspace/Practica3/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/ceo/STM32Cube/PdM_ceo_workspace/Practica3/Drivers/BSP/STM32F4xx_Nucleo_144/_htmresc" -I"/home/ceo/STM32Cube/PdM_ceo_workspace/Practica3/Drivers/API/Inc" -I"/home/ceo/STM32Cube/PdM_ceo_workspace/Practica3/Drivers/API/Src" -x assembler-with-cpp -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "$@" "$<"
 
 clean: clean-Core-2f-Startup
 

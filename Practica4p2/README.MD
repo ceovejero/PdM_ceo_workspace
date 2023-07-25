@@ -41,7 +41,7 @@ Crear un nuevo proyecto como copia del proyecto con la implementación del punto
 Implementar un módulo de software en un archivos fuente `API_debounce.c` con su correspondiente archivo de cabecera `API_debounce.h` y ubicarlos en el proyecto dentro de  las carpetas `/drivers/API/src` y `/drivers/API/inc`, respectivamente.
 En `API_debounce.h` se deben ubicar los prototipos de las funciones públicas y las declaraciones:
 
-```
+```c
 void debounceFSM_init();
 void debounceFSM_update();
 

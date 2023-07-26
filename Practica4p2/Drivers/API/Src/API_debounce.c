@@ -19,7 +19,8 @@
 				} debounceState_t;
 
 static delay_t delayDebounceFSM; //Estructura para control de tiempos
-static debounceState_t estadoActual; // Variable de estado (global) interna de Maquina de Estados
+static debounceState_t actualState; // Variable de estado (global) interna de Maquina de Estados
+static bool_t pressed;
 
 /**
  * @brief  Inicializa la Maquina de Estado - debounce
@@ -28,7 +29,7 @@ static debounceState_t estadoActual; // Variable de estado (global) interna de M
  */
 void debounceFSM_init()
 {
-		estadoActual = BUTTON_UP;
+	actualState = BUTTON_UP;
 		BSP_PB_Init(BUTTON_USER, BUTTON_MODE_GPIO);
 		delayInit(&delayDebounceFSM, DEBOUNCE_PERIOD);  //control de tiempos para debounce
 }
@@ -40,12 +41,12 @@ void debounceFSM_init()
  */
 void debounceFSM_update()
 {
-	switch (estadoActual)
+	switch (actualState)
 		{
 			case BUTTON_UP:
 					if (BSP_PB_GetState(BUTTON_USER))
 						{
-							estadoActual = BUTTON_FALLING; //estado siguiente
+						actualState = BUTTON_FALLING; //estado siguiente
 							delayRead(&delayDebounceFSM);  //inicia la cuenta de antirrebote
 						}
 			break;
@@ -54,19 +55,19 @@ void debounceFSM_update()
 					{// padado el tiempo de antirebote se controla el estado del pulsador
 						if (BSP_PB_GetState(BUTTON_USER))
 						{	// si sigue presionado se pasa al sigte estado
-							estadoActual = BUTTON_DOWN;
-							buttonPressed();	//accion para estado presionado
+							actualState = BUTTON_DOWN;
+							pressed = true;	// estado presionado
 						}
 						else // si se detecta estado inestable del pulsador
 						{
-							estadoActual = BUTTON_UP;   //regreso al estado previo
+							actualState = BUTTON_UP;   //regreso al estado previo
 						}
 					}
 			break;
 			case BUTTON_DOWN:
 					if (!BSP_PB_GetState(BUTTON_USER))
 						{	// si el pulsador se libera se regresa al estado anterior
-							estadoActual = BUTTON_RAISING;
+						actualState = BUTTON_RAISING;
 							delayRead(&delayDebounceFSM);
 						}
 			break;
@@ -75,41 +76,35 @@ void debounceFSM_update()
 					{	// padado el tiempo de antirebote se controla el estado del pulsador
 						if(!BSP_PB_GetState(BUTTON_USER))
 						{	//  si se libera se pasa al sigte estado
-							estadoActual = BUTTON_UP;
-							buttonReleased();   //accion para estado NO presionado
+							actualState = BUTTON_UP;
+							pressed = false;;   // NO presionado
 						}
 						else   // si se detecta estado inestable del pulsador
 						{
-							estadoActual = BUTTON_DOWN;  //regreso al estado previo
+							actualState = BUTTON_DOWN;  //regreso al estado previo
 						}
 					}
 			break;
 			default:
 					// si se carga algun valor no contemplado, se regresa al estado inicial
-					estadoActual = BUTTON_UP;
+					actualState = BUTTON_UP;
 			break;
 		}
 }
 
 /**
-* @brief  Accion para boton presionado - invierte el estado del LED1
+* @brief  boton presionado
 * @param  None
-* @retval None
+* @retval true si se presiono el pulsador
 */
-void buttonPressed()
+const bool_t readKey()
 {
-	BSP_LED_Toggle(LED1);
+	bool_t flag = false;
+	if (pressed)
+		{
+			flag = true;
+			pressed = false;
+		}
+	return flag;
 }
-
-
- /**
- * @brief  Accion para boton liberado - invierte el estado del LED3
- * @param  None
- * @retval None
- */
-void buttonReleased()
-{
-	BSP_LED_Toggle(LED3);
-}
-
 

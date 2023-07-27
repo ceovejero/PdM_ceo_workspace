@@ -36,6 +36,9 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 
+//===============Periodos en ms ====================
+#define PERIOD_1 100
+#define PERIOD_2 500
 
 /* USER CODE END PD */
 
@@ -52,8 +55,8 @@ PCD_HandleTypeDef hpcd_USB_OTG_FS;
 /* USER CODE BEGIN PV */
 
 /* =============== Variables Definitions ====================== */
-//bool_t userButton;
-
+bool_t periodFlag = false;   //Bandera para conmutar entre DOS valores de Periodos
+delay_t ledTimed;				//Estructura de temporizacion
 
 
 
@@ -95,9 +98,11 @@ int main(void)
   /* USER CODE BEGIN Init */
 
   /* ========== Init func ========== */
-	BSP_LED_Init(LED1);
-	BSP_LED_Init(LED3);
+	BSP_LED_Init(LED2);
+
 	debounceFSM_init();			// debe cargar el estado inicial
+
+	delayInit(&ledTimed, PERIOD_1);
   /* =========================================== */
 
   /* USER CODE END Init */
@@ -124,7 +129,24 @@ int main(void)
     /* USER CODE END WHILE */
 
 	  debounceFSM_update();		// debe leer las entradas, resolver la logica...
+	  if(readKey())
+	  	  {
+		  	  if(periodFlag)
+		  	  	  {
+		  		  	  periodFlag=false;
+		  		  	  delayWrite(&ledTimed, PERIOD_1);
+		  	  	  }
+		  	  else
+		  	  	  {
+		  		  	  periodFlag=true;
+		  			  delayWrite(&ledTimed, PERIOD_2);
+		  	  	  }
+	  	  }
 
+	  if(delayRead(&ledTimed))
+	  	  {
+		  	  BSP_LED_Toggle(LED2);
+	  	  }
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

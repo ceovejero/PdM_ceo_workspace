@@ -10,9 +10,9 @@
 
 #include "API_header.h"
 
-
-typedef uint32_t tick_t;
-typedef bool bool_t;
+// typeder movidos a API_header.h
+//typedef uint32_t tick_t;
+//typedef bool bool_t;
 
 /* == struct for Non-bloquing delay == */
 typedef struct{

@@ -19,7 +19,7 @@ void buttonReleased();			// debe invertir el estado del LED3
 
 /* La función readKey debe leer una variable interna del módulo y devolver true o false si la tecla fue presionada.
  * Si devuelve true, debe resetear (poner en false) el estado de la variable.*/
-bool_t readKey();
+const bool_t readKey();
 
 
 #endif /* API_INC_API_DEBOUNCE_H_ */

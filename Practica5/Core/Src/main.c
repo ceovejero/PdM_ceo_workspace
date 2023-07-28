@@ -20,6 +20,8 @@
 #include "main.h"
 #include "API_delay.h"
 #include "API_debounce.h"
+#include "API_uart.h"
+
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -131,7 +133,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	  uint8_t data = "R";
+	  uint8_t data = 'R';
 	  uint8_t *pdata = &data;
 	  uint16_t  size = 1;
 	  HAL_UART_Transmit(&huart3, pdata, size, 40);

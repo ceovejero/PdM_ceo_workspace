@@ -4,7 +4,10 @@
 #metadata
 .metadata/
 
+RemoteSystemsTempFiles/
 .DS_Store
+**/.DS_Store
+**/*.o
 
 #Debug
 Debug/

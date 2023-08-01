@@ -9572,3 +9572,12 @@ java.lang.Exception: Resource '/Practica5' does not exist.
 
 !ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2023-07-31 21:10:42.610
 !MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 96000000; div: 48
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2023-07-31 21:16:49.571
+!MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 96000000; div: 48
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2023-07-31 21:47:17.320
+!MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 96000000; div: 48
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.swv 1 1 2023-07-31 21:48:44.028
+!MESSAGE SWV configuration; base: 36000000; minDiv: 18; maxDiv: 65535; maxSWO: 2000000; limit: 2000000 => SWO: 2000000; CPU: 96000000; div: 48

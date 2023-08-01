@@ -100,11 +100,11 @@ int main(void)
   /* USER CODE BEGIN Init */
 
   /* ========== Init func ========== */
-	BSP_LED_Init(LED2);
+	BSP_LED_Init(LED2);			// Se nicializa el LED2 onboard a traves de funciones de BSP
 
-	debounceFSM_init();			// debe cargar el estado inicial
+	debounceFSM_init();			// Se inicializa la maquina de estados del antirrebote de pulsador
 
-	delayInit(&ledTimed, PERIOD_1);
+	delayInit(&ledTimed, PERIOD_1);		// Se inicializa la estructura de temporizacion
   /* =========================================== */
 
   /* USER CODE END Init */
@@ -122,11 +122,12 @@ int main(void)
   MX_USB_OTG_FS_PCD_Init();
   /* USER CODE BEGIN 2 */
 
-  //HAL_StatusTypeDef HAL_UART_Init(UART_HandleTypeDef *huart);
- // HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
- // HAL_StatusTypeDef HAL_UART_Receive(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size, uint32_t Timeout);
 
-  inicioUart = uartInit();
+  inicioUart = uartInit();			//inicializacion de la uart y captura de inicializacion correcta/incorrecta
+  if (!inicioUart)
+  {
+	  ErrorHandler();			// en caso de inicializacion incorrecta se llava a la funcion de reporte de error
+  }
 
   /* USER CODE END 2 */
 
@@ -136,10 +137,10 @@ int main(void)
   {
     /* USER CODE END WHILE */
 
-	  debounceFSM_update();		// debe leer las entradas, resolver la logica...
-	  	  if(readKey())
+	  debounceFSM_update();		// actualiza la maquina de estados del antirrebote de pulsador
+	  	  if(readKey())							// ante la ocurrencia del preionado del pulsador se cambi el periodo del parpadeo de leds
 	  	  	  {
-	  		  	  if(periodFlag)
+	  		  	  if(periodFlag)					// una bandera se utiliza para conmutar el cambio de periodos de parpadeo
 	  		  	  	  {
 	  		  		  	  periodFlag=false;
 	  		  		  	  delayWrite(&ledTimed, PERIOD_1);
@@ -151,19 +152,12 @@ int main(void)
 	  		  	  	  }
 	  	  	  }
 
-	  	  if(delayRead(&ledTimed))
+	  	  if(delayRead(&ledTimed))		// la funcion de temporizacion permite la inversion de estao de enciendido del led
 	  	  	  {
 	  		  	  BSP_LED_Toggle(LED2);
 	  	  	  }
 
-/*
-	  uint8_t data = 'R';
-	  uint8_t *pdata = &data;
-	  uint16_t  size = 1;
-	  HAL_UART_Transmit(&huart3, pdata, size, 40);
 
-	  HAL_Delay(500);
-*/
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

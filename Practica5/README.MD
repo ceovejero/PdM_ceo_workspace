@@ -1,4 +1,4 @@
-# Práctica 5 - En proceso...
+# Práctica 5 -
 
 ## Objetivo
 Implementar un módulo de software sencillo para trabajar con la **UART**. 

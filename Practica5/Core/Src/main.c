@@ -60,7 +60,7 @@ PCD_HandleTypeDef hpcd_USB_OTG_FS;
 bool_t periodFlag = false;   //Bandera para conmutar entre DOS valores de Periodos
 delay_t ledTimed;				//Estructura de temporizacion
 
-
+bool_t  inicioUart;
 
 /* ============================================================ */
 
@@ -126,6 +126,8 @@ int main(void)
  // HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
  // HAL_StatusTypeDef HAL_UART_Receive(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size, uint32_t Timeout);
 
+  inicioUart = uartInit();
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -133,13 +135,35 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
+
+	  debounceFSM_update();		// debe leer las entradas, resolver la logica...
+	  	  if(readKey())
+	  	  	  {
+	  		  	  if(periodFlag)
+	  		  	  	  {
+	  		  		  	  periodFlag=false;
+	  		  		  	  delayWrite(&ledTimed, PERIOD_1);
+	  		  	  	  }
+	  		  	  else
+	  		  	  	  {
+	  		  		  	  periodFlag=true;
+	  		  			  delayWrite(&ledTimed, PERIOD_2);
+	  		  	  	  }
+	  	  	  }
+
+	  	  if(delayRead(&ledTimed))
+	  	  	  {
+	  		  	  BSP_LED_Toggle(LED2);
+	  	  	  }
+
+/*
 	  uint8_t data = 'R';
 	  uint8_t *pdata = &data;
 	  uint16_t  size = 1;
 	  HAL_UART_Transmit(&huart3, pdata, size, 40);
 
 	  HAL_Delay(500);
-
+*/
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

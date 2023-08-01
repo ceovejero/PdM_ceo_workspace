@@ -3,6 +3,12 @@
 
 #metadata
 .metadata/
+*.pdom
+*.log
+*.pdom
+*.index
+*.ini
+*.cyclo
 
 RemoteSystemsTempFiles/
 .DS_Store
@@ -10,6 +16,7 @@ RemoteSystemsTempFiles/
 **/*.o
 
 #Debug
+**/Debug/
 Debug/
 debug/
 Release/

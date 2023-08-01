@@ -8,8 +8,11 @@
 #include "API_header.h"
 #include "API_delay.h"
 #include "API_debounce.h"
+#include "API_uart.h"
 
 #define DEBOUNCE_PERIOD 40
+#define UART_BUTTON_PRESSED "\r\nUser Button Falling edge - Flanco Descendente\r\n"
+#define UART_BUTTON_RELEASED "\r\nUser Button Raising edge - Flanco Ascendente\r\n"
 
  typedef enum{
 					BUTTON_UP,
@@ -57,6 +60,7 @@ void debounceFSM_update()
 						{	// si sigue presionado se pasa al sigte estado
 							actualState = BUTTON_DOWN;
 							pressed = true;	// estado presionado
+							buttonPressed();	//accion para estado presionado
 						}
 						else // si se detecta estado inestable del pulsador
 						{
@@ -78,6 +82,7 @@ void debounceFSM_update()
 						{	//  si se libera se pasa al sigte estado
 							actualState = BUTTON_UP;
 							pressed = false;;   // NO presionado
+							buttonReleased();   //accion para estado NO presionado
 						}
 						else   // si se detecta estado inestable del pulsador
 						{
@@ -108,3 +113,23 @@ const bool_t readKey()
 	return flag;
 }
 
+/**
+* @brief  Accion para boton presionado - invierte el estado del LED1
+* @param  None
+* @retval None
+*/
+void buttonPressed()
+{
+	uartSendString((uint8_t *) UART_BUTTON_PRESSED);
+}
+
+
+ /**
+ * @brief  Accion para boton liberado - invierte el estado del LED3
+ * @param  None
+ * @retval None
+ */
+void buttonReleased()
+{
+	uartSendString((uint8_t *) UART_BUTTON_RELEASED);
+}

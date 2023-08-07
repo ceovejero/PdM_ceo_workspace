@@ -11,10 +11,12 @@
 #define UART_INIT_OK "\r\nInicializacion correcta\r\n"
 #define UART_INIT_FAIL "Fallo de inicializacion\r\n"
 #define INIT_MSG "Comunic UART 9600, 8N1\r\n HWC_OFF, Tx-Rx, OS_16\r\n"
+#define SIZE_ONE 1
 
-// from Carmine Noviello - pag 185
-UART_HandleTypeDef uartHandle;			// declaracion de la estructura de configuracion de UART
+// from Carmine Noviello pag 230
+static UART_HandleTypeDef uartHandle;			// declaracion de la estructura de configuracion de UART
 static uint32_t uartDelay = HAL_MAX_DELAY;		// definicion del timeout de uart en su valor maximo
+static bool_t uartInitStatus = false;
 //static char pstring[100]={0};
 
 
@@ -26,6 +28,16 @@ static uint32_t uartDelay = HAL_MAX_DELAY;		// definicion del timeout de uart en
 const bool_t uartInit()			// inicializacion de UART
 {
 	// estructura de inicializacion de UART
+	/*
+	 * Instancia= USART3
+	 * BaudRate= 9600
+	 * WordLengh= 8 bit (7 bit  datos + 1 bit paridad)
+	 * StopBit= 1 stop bit
+	 * Parity= No Paridad
+	 * Mode= TX_RX
+	 * WardWareControl= HW flow OFF
+	 * OverSampling= 16
+	 * */
 	uartHandle.Instance = USART3;
 	uartHandle.Init.BaudRate = 9600;
 	uartHandle.Init.WordLength = UART_WORDLENGTH_8B;
@@ -38,16 +50,16 @@ const bool_t uartInit()			// inicializacion de UART
 	if (HAL_UART_Init(&uartHandle) != HAL_OK)			// Inicializacio nde UART
 		{
 			uartSendString((uint8_t *) UART_INIT_FAIL);		// en caso de error de inicializacion se envia mensaje de error
-			return false;
+			uartInitStatus = false;
 		}
 	else
 		{
 			uartSendString((uint8_t *) UART_INIT_OK);		// en caso de inicializacion Correcta se envia mensaje OK
 			uartSendString((uint8_t *) INIT_MSG);
-			return true;
+			uartInitStatus = true;
 		}
 
-	//return true;
+	return uartInitStatus;
 }
 
 
@@ -58,8 +70,14 @@ const bool_t uartInit()			// inicializacion de UART
  */
 void uartSendString(uint8_t * pstring)
 {
-	uint16_t len = (uint16_t) strlen((const char *)pstring);
-	HAL_UART_Transmit(&uartHandle, pstring, len, uartDelay);
+	assert
+	uint16_t len = 0;
+	while (*(pstring+len) != '\0')
+	{
+		HAL_UART_Transmit(&uartHandle, (pstring+len), (uint16_t)SIZE_ONE, uartDelay);
+		len++;
+	}
+
 }
 
 /**
@@ -71,6 +89,13 @@ void uartSendString(uint8_t * pstring)
 void uartSendStringSize(uint8_t * pstring, uint16_t size)
 {
 	HAL_UART_Transmit(&uartHandle, pstring, size, uartDelay);
+
+	for (uint16_t len = 0; len <= size; len++)
+	{
+		HAL_UART_Transmit(&uartHandle, (pstring+len), (uint16_t)SIZE_ONE, uartDelay);
+		len++;
+	}
+
 }
 
 

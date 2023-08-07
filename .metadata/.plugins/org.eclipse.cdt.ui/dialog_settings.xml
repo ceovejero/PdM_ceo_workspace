@@ -16,4 +16,10 @@
 		<item key="DIALOG_HEIGHT" value="290"/>
 		<item key="DIALOG_FONT_NAME" value="1|Ubuntu|11.0|0|GTK|1|"/>
 	</section>
+	<section name="org.eclipse.cdt.internal.ui.includebrowser.IBViewPart">
+		<item key="inactiveFilter" value="false"/>
+		<item key="systemFilter" value="false"/>
+		<item key="includedBy" value="true"/>
+		<item key="showFolders" value="false"/>
+	</section>
 </section>

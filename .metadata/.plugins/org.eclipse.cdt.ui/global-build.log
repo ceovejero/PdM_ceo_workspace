@@ -1,4 +1,4 @@
-15:16:47 **** Incremental Build of configuration Debug for project Practica5 ****
+22:31:40 **** Incremental Build of configuration Debug for project Practica5 ****
 make -j4 all 
 arm-none-eabi-gcc "../Drivers/API/Src/API_uart.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F413xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I"D:/Users/CEO/STM32CubeIDE/PdM_ceo_workspace/Practica5/Drivers/BSP/STM32F4xx_Nucleo_144" -I"D:/Users/CEO/STM32CubeIDE/PdM_ceo_workspace/Practica5/Drivers/BSP/STM32F4xx_Nucleo_144/_htmresc" -I"D:/Users/CEO/STM32CubeIDE/PdM_ceo_workspace/Practica5/Drivers/API/Inc" -I"D:/Users/CEO/STM32CubeIDE/PdM_ceo_workspace/Practica5/Drivers/API/Src" -I"D:/Users/CEO/STM32CubeIDE/PdM_ceo_workspace/Practica5/Drivers/API" -I"D:/Users/CEO/STM32CubeIDE/PdM_ceo_workspace/Practica5/Drivers" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/API_uart.d" -MT"Drivers/API/Src/API_uart.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/API_uart.o"
 arm-none-eabi-gcc -o "Practica5.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Users\CEO\STM32CubeIDE\PdM_ceo_workspace\Practica5\STM32F413ZHTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Practica5.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
@@ -7,7 +7,7 @@ Finished building target: Practica5.elf
 arm-none-eabi-size   Practica5.elf 
 arm-none-eabi-objdump -h -S  Practica5.elf  > "Practica5.list"
    text	   data	    bss	    dec	    hex	filename
-  14072	     40	   3040	  17152	   4300	Practica5.elf
+  19020	    140	   3060	  22220	   56cc	Practica5.elf
 Finished building: default.size.stdout
  
 Finished building: Practica5.list

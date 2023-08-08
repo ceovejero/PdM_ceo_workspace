@@ -70,7 +70,7 @@ const bool_t uartInit()			// inicializacion de UART
  */
 void uartSendString(uint8_t * pstring)
 {
-	assert
+	assert(pstring!=0);
 	uint16_t len = 0;
 	while (*(pstring+len) != '\0')
 	{
@@ -88,7 +88,10 @@ void uartSendString(uint8_t * pstring)
  */
 void uartSendStringSize(uint8_t * pstring, uint16_t size)
 {
-	HAL_UART_Transmit(&uartHandle, pstring, size, uartDelay);
+	assert(pstring!=0);
+	assert(size>0);
+
+	//HAL_UART_Transmit(&uartHandle, pstring, size, uartDelay);
 
 	for (uint16_t len = 0; len <= size; len++)
 	{
@@ -107,5 +110,7 @@ void uartSendStringSize(uint8_t * pstring, uint16_t size)
  */
 void uartReceiveStringSize(uint8_t * pstring, uint16_t size)
 {
+	assert(pstring!=0);
+	assert(size>0);
 	HAL_UART_Receive(&uartHandle, pstring, size, uartDelay);
 }

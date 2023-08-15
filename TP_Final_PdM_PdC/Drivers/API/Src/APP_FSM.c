@@ -19,8 +19,8 @@
 #define TRUE 1
 #define FALSE 0
 
-#define PERIOD_1 100
-#define PERIOD_2 800
+#define PERIOD_1 300
+#define PERIOD_2 500
 
 
 
@@ -46,18 +46,24 @@ static delay_t ledTimed;				//Estructura de temporizacion
 static bool_t  inicioUart;
 static uint8_t prevState = INIT_APP_STATE;
 
+bool_t periodFlag = false;   //Bandera para conmutar entre DOS valores de Periodos
+static delay_t ledTimed;				//Estructura de temporizacion
 
+/**
+  * @brief Inicializacion de la APPlicacion y todos sus componentes
+  * @param None
+  * @retval None
+  */
 void APP_FSM_init()
 {
 		actualAppState = INIT_APP_STATE;
 		//BSP_PB_Init(BUTTON_USER, BUTTON_MODE_GPIO);
-		delayInit(&delayInitApp, INIT_APP_TIME);  //control de tiempos para debounce
+		delayInit(&delayInitApp, INIT_APP_TIME);  //Para control de tiempos de INIT_APP_STATE;
 		BSP_LED_Init(LED2);			// Se nicializa el LED2 onboard a traves de funciones de BSP
 		debounceFSM_init();			// Se inicializa la maquina de estados del antirrebote de pulsador
 		delayInit(&ledTimed, PERIOD_1);		// Se inicializa la estructura de temporizacion
 
-		  lcd_begin ();
-		  lcd_init ();
+		  lcd_i2c_init ();
 		  delayUS_DWT_Init();
 
 		  inicioUart = uartInit();			//inicializacion de la uart y captura de inicializacion correcta/incorrecta
@@ -68,6 +74,12 @@ void APP_FSM_init()
 
 
 }
+
+/**
+  * @brief Lee las entradas y Actualiza el estado segun la logica
+  * @param None
+  * @retval None
+  */
 void APP_FSM_update()
 {
 	switch (actualAppState)
@@ -83,7 +95,7 @@ void APP_FSM_update()
 									 //sprintf(lcdString, "PdM - PdC");
 									 lcd_put_cur(1, 0);
 									 lcd_send_string (initMessageRow2);
-									 while(!delayRead(&delayInitApp))
+									 while(!delayRead(&delayInitApp))			//Espera (No b.oqueante) de 2 seg para q sea visible el mensaje Presentacion
 									 {}
 
 								sprintf(uartString, "%s\n\r %s\n\r",initMessageRow1,initMessageRow2);
@@ -154,3 +166,32 @@ void APP_FSM_update()
 
 }
 
+/**
+  * @brief Actualiza el parpadeo de LEDs para testigo visual
+  * @param None
+  * @retval None
+  */
+void APP_FSM_LED()
+{
+	 if(readKey())							// ante la ocurrencia del preionado del pulsador se cambi el periodo del parpadeo de leds
+		 	  	  	  {
+		 	  		  	  if(periodFlag)					// una bandera se utiliza para conmutar el cambio de periodos de parpadeo
+		 	  		  	  	  {
+		 	  		  		  	  periodFlag=false;
+		 	  		  		  	  delayWrite(&ledTimed, PERIOD_1);
+
+		 	  		  	  	  }
+		 	  		  	  else
+		 	  		  	  	  {
+		 	  		  		  	  periodFlag=true;
+		 	  		  			  delayWrite(&ledTimed, PERIOD_2);
+
+		 	  		  	  	  }
+		 	  	  	  }
+
+		 	  	  if(delayRead(&ledTimed))		// la funcion de temporizacion permite la inversion de estao de enciendido del led
+		 	  	  	  {
+		 	  		  	BSP_LED_Toggle(LED2);
+
+		 	  	  	  }
+}

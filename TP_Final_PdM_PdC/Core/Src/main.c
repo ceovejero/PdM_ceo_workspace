@@ -43,11 +43,8 @@
 /* USER CODE BEGIN PD */
 
 //===============Periodos en ms ====================
-#define PERIOD_1 100
-#define PERIOD_2 300
-
-#define MENSAJE_I2C "caso1 "
-#define MENSAJE_I2C_2 "caso2 "
+#define PERIOD_1 300
+#define PERIOD_2 500
 
 /* USER CODE END PD */
 
@@ -66,18 +63,8 @@ PCD_HandleTypeDef hpcd_USB_OTG_FS;
 /* USER CODE BEGIN PV */
 
 /* =============== Variables Definitions ====================== */
-bool_t periodFlag = false;   //Bandera para conmutar entre DOS valores de Periodos
-delay_t ledTimed;				//Estructura de temporizacion
-
-/*
-bool_t  inicioUart;
-char uartString[50]=" ";
-char lcdString[20]=" ";
-char tempChar;
-float	myTemp=0;
-uint8_t intTemp=0;
-float   pre_myTemp=0;
-*/
+// bool_t periodFlag = false;   //Bandera para conmutar entre DOS valores de Periodos
+// delay_t ledTimed;				//Estructura de temporizacion
 
 
 /* ============================================================ */
@@ -126,21 +113,7 @@ int main(void)
 
   /* ========== Init func ========== */
   /*
- 	BSP_LED_Init(LED2);			// Se nicializa el LED2 onboard a traves de funciones de BSP
 
-	debounceFSM_init();			// Se inicializa la maquina de estados del antirrebote de pulsador
-
-	delayInit(&ledTimed, PERIOD_1);		// Se inicializa la estructura de temporizacion
-
-	  lcd_begin ();
-	  lcd_init ();
-	  DWT_Delay_Init();
-
-	  inicioUart = uartInit();			//inicializacion de la uart y captura de inicializacion correcta/incorrecta
-	  if (!inicioUart)
-	  {
-		  ErrorHandler();			// en caso de inicializacion incorrecta se llava a la funcion de reporte de error
-	  }
 
   */
 
@@ -172,50 +145,10 @@ int main(void)
   {
 	  debounceFSM_update();		// actualiza la maquina de estados del antirrebote de pulsador
 
-	  APP_FSM_update();
+	  APP_FSM_update();   // Actualiza MAquina de Estados de la APP
 
-/*
-	  myTemp = ds18b20_read_temp();
+	  APP_FSM_LED();  // Actualiza el parpadeo de leds testigo de funcionamiento
 
-	 if (pre_myTemp != myTemp)
-	 {
-		 pre_myTemp = myTemp;
-		 sprintf(lcdString, "%3.3f",myTemp);
-		 lcd_clear();
-		 lcd_put_cur(0, 0);
-		 lcd_send_string (lcdString);
-	 }
-
-	  sprintf(uartString, "%3.3f\n\r",myTemp);
-	  //DWT_Delay_us(42);
-*/
-	 	  	  if(readKey())							// ante la ocurrencia del preionado del pulsador se cambi el periodo del parpadeo de leds
-	 	  	  	  {
-	 	  		  	  if(periodFlag)					// una bandera se utiliza para conmutar el cambio de periodos de parpadeo
-	 	  		  	  	  {
-	 	  		  		  	  periodFlag=false;
-	 	  		  		  	  delayWrite(&ledTimed, PERIOD_1);
-	 	  		  		  	  //lcd_send_string (MENSAJE_I2C);
-	 	  		  	  	  }
-	 	  		  	  else
-	 	  		  	  	  {
-	 	  		  		  	  periodFlag=true;
-	 	  		  			  delayWrite(&ledTimed, PERIOD_2);
-	 	  		  			  //lcd_send_string (MENSAJE_I2C_2);
-	 	  		  	  	  }
-	 	  	  	  }
-
-	 	  	  if(delayRead(&ledTimed))		// la funcion de temporizacion permite la inversion de estao de enciendido del led
-	 	  	  	  {
-	 	  		  	BSP_LED_Toggle(LED2);
-	 	  		  	//intTemp =  myTemp;
-	 	  		  	//sprintf(uartString, "%3.2f\n",myTemp);
-	 	  		  	//uartSendString((uint8_t *) uartString);
-
-	 	  		  	//myTemp++;
-	 	  		  	//if(myTemp>250) myTemp=0;
-	 	  	  	  }
-	 //lcd_send_string (MENSAJE_I2C);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

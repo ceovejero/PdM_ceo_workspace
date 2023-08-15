@@ -11,14 +11,25 @@
 I2C_HandleTypeDef i2c1Handle;
 
 
-#define SLAVE_ADDRESS_LCD 0x4E // change this according to ur setup
+#define SLAVE_ADDRESS_LCD 0x4E // 0x4E for 0x27 Address  -  See Datasheet for more details
 
 #define I2C_DATA_SIZE 4
 #define I2C_TIMEOUT 100
 
+/**
+  * @brief Inicializacion de Puerto y de LCD
+  * @param None
+  * @retval None
+  */
+void lcd_i2c_init (void)
+{
+		lcd_begin ();
+		lcd_init ();
+}
+
 
 /**
-  * @brief I2C1 Initialization Function
+  * @brief I2C1 Initialization Function of I2C port
   * @param None
   * @retval None
   */
@@ -40,7 +51,11 @@ void lcd_begin (void)
 }
 
 
-
+/**
+  * @brief Funcion de envio de Comando al LCD
+  * @param Char Commando value
+  * @retval None
+  */
 void lcd_send_cmd (char cmd)
 {
   char data_u, data_l;
@@ -53,7 +68,11 @@ void lcd_send_cmd (char cmd)
 	data_t[3] = data_l|0x08;  //en=0, rs=0
 	HAL_I2C_Master_Transmit (&i2c1Handle, SLAVE_ADDRESS_LCD,(uint8_t *) data_t, I2C_DATA_SIZE, I2C_TIMEOUT);
 }
-
+/**
+  * @brief Funcion de envio de Datos al LCD
+  * @param Char Data
+  * @retval None
+  */
 void lcd_send_data (char data)
 {
 	char data_u, data_l;
@@ -66,13 +85,21 @@ void lcd_send_data (char data)
 	data_t[3] = data_l|0x09;  //en=0, rs=1
 	HAL_I2C_Master_Transmit (&i2c1Handle, SLAVE_ADDRESS_LCD,(uint8_t *) data_t, I2C_DATA_SIZE, I2C_TIMEOUT);
 }
-
+/**
+  * @brief Funcion de envio de Cadena de Caracteres al LCD
+  * @param char *str
+  * @retval None
+  */
 void lcd_send_string (char *str)
 {
 	while (*str) lcd_send_data (*str++);
 
 }
-
+/**
+  * @brief Funcion Limpieza de pantalla en LCD
+  * @param None
+  * @retval None
+  */
 void lcd_clear (void)
 {
 	lcd_send_cmd (0x80);
@@ -81,7 +108,12 @@ void lcd_clear (void)
 		lcd_send_data (' ');
 	}
 }
-
+/**
+  * @brief Funcion de posicionamiento de cursor en LCD
+  * @param int Filas
+  * @param int Columnas
+  * @retval None
+  */
 void lcd_put_cur(int row, int col)
 {
     switch (row)
@@ -104,7 +136,12 @@ void lcd_put_cur(int row, int col)
 
     lcd_send_cmd (col);
 }
-
+/**
+  * @brief Funcion de Inicializacion LCD
+  * @param None
+  * @param None
+  * @retval None
+  */
 void lcd_init (void)
 {
 	// 4 bit initialisation

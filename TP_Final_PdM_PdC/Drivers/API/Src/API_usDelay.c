@@ -8,16 +8,16 @@
  *
  */
 
-#include "API_header.h"          // change to whatever MCU you use
+#include "API_header.h"      // header para integrar librerias comunes
 #include "API_usDelay.h"
 
 /**
- * Initialization routine.
+ * Rutina de Inicializacion
  *
  * @param  None
  * @retval None
  */
-void delayUS_DWT_Init(void)
+void delayUS_DWT_Init(void)  //fuente Matering STM - Carmine Noviello
 {
     if (!(CoreDebug->DEMCR & CoreDebug_DEMCR_TRCENA_Msk))
     {
@@ -31,19 +31,19 @@ void delayUS_DWT_Init(void)
 
 
 /**
- * Delay routine.
- * Time is in microseconds.
+ * Rutina de demora.
+ * Tiempo en microsegundos.
  *
  *
- * @param uint32_t us  Number of microseconds to delay for
+ * @param uint32_t us  Numero de microsegundos para demora
  * @param
  * @retval None
  */
-void delayUS_DWT(uint32_t us) // microseconds
+void delayUS_DWT(uint32_t us) // microsegundos
 {
-    uint32_t startTick = DWT->CYCCNT,
-             delayTicks = us * (SystemCoreClock/1000000);
+    uint32_t 		start = DWT->CYCCNT,
+    					cycles = (SystemCoreClock/1000000) * us;
 
-    while (DWT->CYCCNT - startTick < delayTicks);
+    while (DWT->CYCCNT - start < cycles);
 }
 

@@ -15,20 +15,19 @@
 
 #include <API_header.h>
 
-#define DWT_DELAY_NEWBIE 0
 /**
- * Initialization routine.
+ * Rutina de Inicializacion
  *
  * @param  None
  * @retval None
  */
 void delayUS_DWT_Init(void);
 /**
- * Delay routine.
- * Time is in microseconds.
+ * Rutina de demora.
+ * Tiempo en microsegundos.
  *
  *
- * @param uint32_t us  Number of microseconds to delay for
+ * @param uint32_t us  Numero de microsegundos para Demora
  * @param
  * @retval None
  */

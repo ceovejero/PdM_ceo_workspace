@@ -11,11 +11,6 @@
 #include "API_usDelay.h"
 #include "API_delay.h"
 
-//extern uint8_t check =2;
-//extern uint8_t  temp_l;
-//extern uint8_t  temp_h;
-//extern uint16_t temp;
-// float temperature;
 
 #define LOW 0								// Logic State for GPIO_PIN Communication
 #define COMM_PIN GPIO_PIN_13				// select GPIO_PIN for communication according to definition in the HAL
@@ -55,11 +50,11 @@ float ds18b20_read_temp(void)
 	if(ds18b20_cmd_flag == 0)
 	{
 		delayInit(&sensorTimed, SENSOR_PERIOD);
-		ds18b20_write_cmd (0xCC);  // skip ROM
+		ds18b20_write_cmd (0xCC);  // skip ROM  - pagina 11 del DAtasheet
 		ds18b20_write_cmd (0x44);  // convert t
 		ds18b20_cmd_flag = 1;
 	}
-	else if(delayRead(&sensorTimed))   //HAL_Delay (800);
+	else if(delayRead(&sensorTimed))   // Delay (800us);
 			{
 				ds18b20_init ();
 				ds18b20_write_cmd (0xCC);  // skip ROM
@@ -123,22 +118,22 @@ uint8_t ds18b20_init (void)
 {
 
 	gpio_set_output ();   // set the pin as output
-	HAL_GPIO_WritePin (COMM_PORT, COMM_PIN, LOW);  // pull the pin low
-	delayUS_DWT (MASTER_Tx_RESET_PULSE);   // 480 uS delay according to datasheet
+	HAL_GPIO_WritePin (COMM_PORT, COMM_PIN, LOW);  // Lleva estado logico del pin a LOW
+	delayUS_DWT (MASTER_Tx_RESET_PULSE);   // 480 uS Se envia pulso LOW con el tiempo apropiado para inicializar comunicacion
 
 	gpio_set_input ();    // set the pin as input
-	delayUS_DWT (MASTER_WAIT_FOR_PRESENCE);    // 80 uS delay, FOR pRESENCE, according to datasheet
+	delayUS_DWT (MASTER_WAIT_FOR_PRESENCE);    // 80 uS esperando pulso de PRESENCE, segun  datasheet
 
-	if (!(HAL_GPIO_ReadPin (COMM_PORT, COMM_PIN)))    // if the pin is low i.e the presence pulse is there
+	if (!(HAL_GPIO_ReadPin (COMM_PORT, COMM_PIN)))    // Si el estado esta en LOW, significa que PRESENCE es detectado
 	{
-		delayUS_DWT (MASTER_WAIT_FOR_END_PRESENCE_PULSE);  // wait for 400 us
-		return 0;
+		delayUS_DWT (MASTER_WAIT_FOR_END_PRESENCE_PULSE);  // espera de 400 us, segun datasheet
+		return 1; //dato logico como retorno de Comunicaciones establecida
 	}
 
 	else
 	{
 		delayUS_DWT (MASTER_WAIT_FOR_END_PRESENCE_PULSE);
-		return 1;
+		return 0;
 	}
 }
 

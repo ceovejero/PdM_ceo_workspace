@@ -145,7 +145,7 @@ int main(void)
   {
 	  debounceFSM_update();		// actualiza la maquina de estados del antirrebote de pulsador
 
-	  APP_FSM_update();   // Actualiza MAquina de Estados de la APP
+	  APP_FSM_update();   // Actualiza Maquina de Estados de la APP
 
 	  APP_FSM_LED();  // Actualiza el parpadeo de leds testigo de funcionamiento
 

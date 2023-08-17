@@ -2,7 +2,7 @@
  * API_LCD_I2C.c
  *
  *  Created on: 7 ago. 2023
- *      Author: CEO
+ *      Author: Contrucción del código usando varias fuentes de internet
  */
 
 #include "API_header.h"
@@ -29,7 +29,7 @@ void lcd_i2c_init (void)
 
 
 /**
-  * @brief I2C1 Initialization Function of I2C port
+  * @brief I2C1 I2C1 Funcion de Inicializacion de puerto I2C
   * @param None
   * @retval None
   */
@@ -85,6 +85,10 @@ void lcd_send_data (char data)
 	data_t[3] = data_l|0x09;  //en=0, rs=1
 	HAL_I2C_Master_Transmit (&i2c1Handle, SLAVE_ADDRESS_LCD,(uint8_t *) data_t, I2C_DATA_SIZE, I2C_TIMEOUT);
 }
+
+
+
+
 /**
   * @brief Funcion de envio de Cadena de Caracteres al LCD
   * @param char *str
@@ -119,16 +123,16 @@ void lcd_put_cur(int row, int col)
     switch (row)
     {
         case 0:
-            col |= 0x80;
+            col |= 0x80;	// posiciona en fila 0, Col 0
             break;
         case 1:
-            col |= 0xC0;	// 0xC0 result: (0x40|0x80)
+            col |= 0xC0;	// 0xC0 result: (0x40|0x80) - 0x40 correponde a Col 0 de la Fila 1
             break;
         case 2:
-            col |= 0x94;	// 0x94 result: (0x14|0x80)
+            col |= 0x94;	// 0x94 result: (0x14|0x80) - 0x14 correponde a Col 0 de la Fila 2
             break;
         case 3:
-            col |= 0xD4;	// 0xD4 result: (0x54|0x80)
+            col |= 0xD4;	// 0xD4 result: (0x54|0x80) - 0x54 correponde a Col 0 de la Fila 3
             break;
         default:
         	col |= 0x80;

@@ -12,14 +12,17 @@
 #include "API_delay.h"
 
 
-#define LOW 0								// Logic State for GPIO_PIN Communication
-#define COMM_PIN GPIO_PIN_13				// select GPIO_PIN for communication according to definition in the HAL
-#define COMM_PORT GPIOB						// select PORT for communication according to definition in the HAL
-#define MASTER_Tx_RESET_PULSE 480			// uSeconds
-#define MASTER_WAIT_FOR_PRESENCE 80			// uSeconds
+#define LOW 0								// Estado Logico de GPIO_PIN para Comunicacion
+#define COMM_PIN GPIO_PIN_13				// Seleccion de  GPIO_PIN para la comunicacion de acuerdo a la definicion en la HAL
+#define COMM_PORT GPIOB						// seleccion de  PORT para la comunicacion de acuerdo a la definicion en la  HAL
+#define MASTER_Tx_RESET_PULSE 480			// uSeg -
+#define MASTER_WAIT_FOR_PRESENCE 80			// uSeg
 #define MASTER_WAIT_FOR_END_PRESENCE_PULSE 400	// 400 uS
-
 #define MASTER_Rx_TIME 480			// uSeconds
+
+#define SKIP_ROM 0xCC // comando para establecer comunicacion sin distinguir cuantos sensores estan en el BUS
+#define CONVERT_T 0x44 // Inicia una conversion
+#define READ_SCRATCHPAD 0xBE // acceso de lectura a los datos de conversion
 
 #define SENSOR_PERIOD 800
 
@@ -50,15 +53,15 @@ float ds18b20_read_temp(void)
 	if(ds18b20_cmd_flag == 0)
 	{
 		delayInit(&sensorTimed, SENSOR_PERIOD);
-		ds18b20_write_cmd (0xCC);  // skip ROM  - pagina 11 del DAtasheet
-		ds18b20_write_cmd (0x44);  // convert t
+		ds18b20_write_cmd (SKIP_ROM);  // skip ROM  - pagina 11 del DAtasheet
+		ds18b20_write_cmd (CONVERT_T);  // convert t - Inicia conversion
 		ds18b20_cmd_flag = 1;
 	}
 	else if(delayRead(&sensorTimed))   // Delay (800us);
 			{
 				ds18b20_init ();
-				ds18b20_write_cmd (0xCC);  // skip ROM
-				ds18b20_write_cmd (0xBE);  // Read Scratchpad
+				ds18b20_write_cmd (SKIP_ROM);  // skip ROM // transmite que el siguiente comando sera para todos los presentes en el bus
+				ds18b20_write_cmd (READ_SCRATCHPAD);  // Read Scratchpad - Acceso de lectura a los datos de conversion
 
 				temp_l = ds18b20_read();
 				temp_h = ds18b20_read();

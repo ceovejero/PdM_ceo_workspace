@@ -17,13 +17,13 @@
   */
 void lcd_i2c_init (void);
 /**
-  * @brief I2C1 Initialization Function of I2C port
+  * @brief Funcion de envio de Comando al LCD
   * @param None
   * @retval None
   */
 void lcd_begin (void);
 /**
-  * @brief Funcion de envio de Comando al LCD
+  * @brief I2C1 Funcion de Inicializacion de puerto I2C
   * @param Char Commando value
   * @retval None
   */

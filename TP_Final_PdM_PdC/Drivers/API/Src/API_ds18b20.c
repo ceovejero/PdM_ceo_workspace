@@ -42,11 +42,7 @@ static uint16_t temp;
 static float temperature=0;
 
 
-
-
-
 //================== Funciones Privadas ===========================
-
 /**
  * Funcion de configuracion del GPIO - Input - para la comunicacion.
  *

@@ -24,13 +24,17 @@
 #define CONVERT_T 0x44 // Inicia una conversion
 #define READ_SCRATCHPAD 0xBE // acceso de lectura a los datos de conversion
 
+#define ERROR_RETURN 14 // en hexadecimal 0x0E
+#define TRUE 1
+#define FALSE 0
+
 #define SENSOR_PERIOD 800
 
 GPIO_InitTypeDef GPIO_InitStruct;
 
 static delay_t sensorTimed;
 
-static bool_t ds18b20_cmd_flag=0;
+static bool_t ds18b20_cmd_flag = FALSE;
 
 static uint8_t  temp_l;
 static uint8_t  temp_h;
@@ -90,12 +94,12 @@ float ds18b20_read_temp(void)
 	uint8_t check = 2;
 	check = ds18b20_init ();
 
-	if(ds18b20_cmd_flag == 0)
+	if(ds18b20_cmd_flag == FALSE)
 	{
 		delayInit(&sensorTimed, SENSOR_PERIOD);
 		ds18b20_write_cmd (SKIP_ROM);  // skip ROM  - pagina 11 del DAtasheet
 		ds18b20_write_cmd (CONVERT_T);  // convert t - Inicia conversion
-		ds18b20_cmd_flag = 1;
+		ds18b20_cmd_flag = TRUE;
 	}
 	else if(delayRead(&sensorTimed))   // Delay (800us);
 			{
@@ -108,12 +112,12 @@ float ds18b20_read_temp(void)
 				temp = (temp_h<<8)|temp_l;
 				temperature = (float)temp/16;
 
-				ds18b20_cmd_flag = 0;
+				ds18b20_cmd_flag = FALSE;
 			}
 
-	if(check == 0)
+	if(check == FALSE)
 		{
-			return (temperature);
+			return (ERROR_RETURN);
 		}
 		else
 		{
@@ -141,13 +145,13 @@ uint8_t ds18b20_init (void)
 	if (!(HAL_GPIO_ReadPin (COMM_PORT, COMM_PIN)))    // Si el estado esta en LOW, significa que PRESENCE es detectado
 	{
 		delayUS_DWT (MASTER_WAIT_FOR_END_PRESENCE_PULSE);  // espera de 400 us, segun datasheet
-		return 1; //dato logico como retorno de Comunicaciones establecida
+		return TRUE; //dato logico como retorno de Comunicaciones establecida
 	}
 
 	else
 	{
 		delayUS_DWT (MASTER_WAIT_FOR_END_PRESENCE_PULSE);
-		return 0;
+		return FALSE;  // Comunicacion NO establecida
 	}
 }
 

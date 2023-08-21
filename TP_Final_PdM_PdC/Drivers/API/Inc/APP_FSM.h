@@ -15,13 +15,13 @@
   * @param None
   * @retval None
   */
-void APP_FSM_init();		// debe cargar el estado inicial
+void APP_FSM_init(void);		// debe cargar el estado inicial
 /**
   * @brief Lee las entradas y Actualiza el estado segun la logica
   * @param None
   * @retval None
   */
-void APP_FSM_update();		// debe leer las entradas, resolver la logica de
+void APP_FSM_update(void);		// debe leer las entradas, resolver la logica de
 													// transicion de estados y actualizar las salidas
 
 /**
@@ -29,6 +29,6 @@ void APP_FSM_update();		// debe leer las entradas, resolver la logica de
   * @param None
   * @retval None
   */
-void APP_FSM_LED();
+void APP_FSM_LED(uint16_t period1, uint16_t period2);
 
 #endif /* API_INC_APP_FSM_H_ */

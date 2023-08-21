@@ -16,6 +16,39 @@ I2C_HandleTypeDef i2c1Handle;
 #define I2C_DATA_SIZE 4
 #define I2C_TIMEOUT 100
 
+//================== Prototipos de Funciones Privadas ===============================================
+
+/**
+  * @brief Funcion de envio de Comando al LCD
+  * @param None
+  * @retval None
+  */
+static void lcd_begin (void);
+/**
+  * @brief Funcion de Inicializacion LCD
+  * @param None
+  * @param None
+  * @retval None
+  */
+static void lcd_init (void);
+/**
+  * @brief I2C1 Funcion de Inicializacion de puerto I2C
+  * @param Char Commando value
+  * @retval None
+  */
+static void lcd_send_cmd (char cmd);
+
+/**
+  * @brief Funcion de envio de Datos al LCD
+  * @param Char Data
+  * @retval None
+  */
+static void lcd_send_data (char data);
+
+
+
+//====================== Funciones Publicas ===========================================================
+
 /**
   * @brief Inicializacion de Puerto y de LCD
   * @param None
@@ -26,68 +59,6 @@ void lcd_i2c_init (void)
 		lcd_begin ();
 		lcd_init ();
 }
-
-
-/**
-  * @brief I2C1 I2C1 Funcion de Inicializacion de puerto I2C
-  * @param None
-  * @retval None
-  */
-void lcd_begin (void)
-{
-		i2c1Handle.Instance = I2C1;
-		i2c1Handle.Init.ClockSpeed = 100000;
-		i2c1Handle.Init.DutyCycle = I2C_DUTYCYCLE_2;
-		i2c1Handle.Init.OwnAddress1 = 0;
-		i2c1Handle.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
-		i2c1Handle.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
-		i2c1Handle.Init.OwnAddress2 = 0;
-		i2c1Handle.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
-		i2c1Handle.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
-		if (HAL_I2C_Init(&i2c1Handle) != HAL_OK)
-		{
-			assert(!HAL_OK);
-		}
-}
-
-
-/**
-  * @brief Funcion de envio de Comando al LCD
-  * @param Char Commando value
-  * @retval None
-  */
-void lcd_send_cmd (char cmd)
-{
-  char data_u, data_l;
-	uint8_t data_t[4];
-	data_u = (cmd&0xf0);
-	data_l = ((cmd<<4)&0xf0);
-	data_t[0] = data_u|0x0C;  //en=1, rs=0
-	data_t[1] = data_u|0x08;  //en=0, rs=0
-	data_t[2] = data_l|0x0C;  //en=1, rs=0
-	data_t[3] = data_l|0x08;  //en=0, rs=0
-	HAL_I2C_Master_Transmit (&i2c1Handle, SLAVE_ADDRESS_LCD,(uint8_t *) data_t, I2C_DATA_SIZE, I2C_TIMEOUT);
-}
-/**
-  * @brief Funcion de envio de Datos al LCD
-  * @param Char Data
-  * @retval None
-  */
-void lcd_send_data (char data)
-{
-	char data_u, data_l;
-	uint8_t data_t[4];
-	data_u = (data&0xf0);
-	data_l = ((data<<4)&0xf0);
-	data_t[0] = data_u|0x0D;  //en=1, rs=1
-	data_t[1] = data_u|0x09;  //en=0, rs=1
-	data_t[2] = data_l|0x0D;  //en=1, rs=1
-	data_t[3] = data_l|0x09;  //en=0, rs=1
-	HAL_I2C_Master_Transmit (&i2c1Handle, SLAVE_ADDRESS_LCD,(uint8_t *) data_t, I2C_DATA_SIZE, I2C_TIMEOUT);
-}
-
-
-
 
 /**
   * @brief Funcion de envio de Cadena de Caracteres al LCD
@@ -140,13 +111,46 @@ void lcd_put_cur(int row, int col)
 
     lcd_send_cmd (col);
 }
+
+
+void lcd_write_row_col(char *str, int row, int col)
+{
+	lcd_put_cur( row,  col);
+	lcd_send_string ( str);
+}
+
+
+//================== Funciones Privadas ===============================================
+
+/**
+  * @brief I2C1 I2C1 Funcion de Inicializacion de puerto I2C
+  * @param None
+  * @retval None
+  */
+static void lcd_begin (void)
+{
+		i2c1Handle.Instance = I2C1;
+		i2c1Handle.Init.ClockSpeed = 100000;
+		i2c1Handle.Init.DutyCycle = I2C_DUTYCYCLE_2;
+		i2c1Handle.Init.OwnAddress1 = 0;
+		i2c1Handle.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
+		i2c1Handle.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+		i2c1Handle.Init.OwnAddress2 = 0;
+		i2c1Handle.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+		i2c1Handle.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+		if (HAL_I2C_Init(&i2c1Handle) != HAL_OK)
+		{
+			assert(!HAL_OK);
+		}
+}
+
 /**
   * @brief Funcion de Inicializacion LCD
   * @param None
   * @param None
   * @retval None
   */
-void lcd_init (void)
+static void lcd_init (void)
 {
 	// 4 bit initialisation
 	HAL_Delay(50);  // wait for >40ms
@@ -173,4 +177,38 @@ void lcd_init (void)
 }
 
 
+/**
+  * @brief Funcion de envio de Comando al LCD
+  * @param Char Commando value
+  * @retval None
+  */
+static void lcd_send_cmd (char cmd)
+{
+  char data_u, data_l;
+	uint8_t data_t[4];
+	data_u = (cmd&0xf0);
+	data_l = ((cmd<<4)&0xf0);
+	data_t[0] = data_u|0x0C;  //en=1, rs=0
+	data_t[1] = data_u|0x08;  //en=0, rs=0
+	data_t[2] = data_l|0x0C;  //en=1, rs=0
+	data_t[3] = data_l|0x08;  //en=0, rs=0
+	HAL_I2C_Master_Transmit (&i2c1Handle, SLAVE_ADDRESS_LCD,(uint8_t *) data_t, I2C_DATA_SIZE, I2C_TIMEOUT);
+}
+/**
+  * @brief Funcion de envio de Datos al LCD
+  * @param Char Data
+  * @retval None
+  */
+static void lcd_send_data (char data)
+{
+	char data_u, data_l;
+	uint8_t data_t[4];
+	data_u = (data&0xf0);
+	data_l = ((data<<4)&0xf0);
+	data_t[0] = data_u|0x0D;  //en=1, rs=1
+	data_t[1] = data_u|0x09;  //en=0, rs=1
+	data_t[2] = data_l|0x0D;  //en=1, rs=1
+	data_t[3] = data_l|0x09;  //en=0, rs=1
+	HAL_I2C_Master_Transmit (&i2c1Handle, SLAVE_ADDRESS_LCD,(uint8_t *) data_t, I2C_DATA_SIZE, I2C_TIMEOUT);
+}
 

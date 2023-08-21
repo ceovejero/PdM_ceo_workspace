@@ -19,8 +19,8 @@
 #define TRUE 1
 #define FALSE 0
 
-#define PERIOD_1 300
-#define PERIOD_2 500
+#define INIT_PERIOD 300
+//#define PERIOD_2 500
 
 
 
@@ -54,14 +54,14 @@ static delay_t ledTimed;				//Estructura de temporizacion
   * @param None
   * @retval None
   */
-void APP_FSM_init()
+void APP_FSM_init(void)
 {
 		actualAppState = INIT_APP_STATE;
 		//BSP_PB_Init(BUTTON_USER, BUTTON_MODE_GPIO);
 		delayInit(&delayInitApp, INIT_APP_TIME);  //Para control de tiempos de INIT_APP_STATE;
 		BSP_LED_Init(LED2);			// Se nicializa el LED2 onboard a traves de funciones de BSP
 		debounceFSM_init();			// Se inicializa la maquina de estados del antirrebote de pulsador
-		delayInit(&ledTimed, PERIOD_1);		// Se inicializa la estructura de temporizacion
+		delayInit(&ledTimed, INIT_PERIOD);		// Se inicializa la estructura de temporizacion
 
 		  lcd_i2c_init ();
 		  delayUS_DWT_Init();
@@ -80,7 +80,7 @@ void APP_FSM_init()
   * @param None
   * @retval None
   */
-void APP_FSM_update()
+void APP_FSM_update(void)
 {
 	switch (actualAppState)
 			{
@@ -166,20 +166,20 @@ void APP_FSM_update()
   * @param None
   * @retval None
   */
-void APP_FSM_LED()
+void APP_FSM_LED(uint16_t period1, uint16_t period2)
 {
 	 if(readKey())							// ante la ocurrencia del preionado del pulsador se cambi el periodo del parpadeo de leds
 		 	  	  	  {
 		 	  		  	  if(periodFlag)					// una bandera se utiliza para conmutar el cambio de periodos de parpadeo
 		 	  		  	  	  {
 		 	  		  		  	  periodFlag=false;
-		 	  		  		  	  delayWrite(&ledTimed, PERIOD_1);
+		 	  		  		  	  delayWrite(&ledTimed, period1);
 
 		 	  		  	  	  }
 		 	  		  	  else
 		 	  		  	  	  {
 		 	  		  		  	  periodFlag=true;
-		 	  		  			  delayWrite(&ledTimed, PERIOD_2);
+		 	  		  			  delayWrite(&ledTimed, period2);
 
 		 	  		  	  	  }
 		 	  	  	  }

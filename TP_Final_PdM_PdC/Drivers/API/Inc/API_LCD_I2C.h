@@ -16,31 +16,7 @@
   * @retval None
   */
 void lcd_i2c_init (void);
-/**
-  * @brief Funcion de envio de Comando al LCD
-  * @param None
-  * @retval None
-  */
-void lcd_begin (void);
-/**
-  * @brief I2C1 Funcion de Inicializacion de puerto I2C
-  * @param Char Commando value
-  * @retval None
-  */
-void lcd_send_cmd (char cmd);
-/**
-  * @brief Funcion de Inicializacion LCD
-  * @param None
-  * @param None
-  * @retval None
-  */
-void lcd_init (void);
-/**
-  * @brief Funcion de envio de Datos al LCD
-  * @param Char Data
-  * @retval None
-  */
-void lcd_send_data (char data);
+
 /**
   * @brief Funcion de envio de Cadena de Caracteres al LCD
   * @param char *str

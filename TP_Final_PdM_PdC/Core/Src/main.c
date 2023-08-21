@@ -147,7 +147,7 @@ int main(void)
 
 	  APP_FSM_update();   // Actualiza Maquina de Estados de la APP
 
-	  APP_FSM_LED();  // Actualiza el parpadeo de leds testigo de funcionamiento
+	  APP_FSM_LED(PERIOD_1, PERIOD_2);  // Actualiza el parpadeo de leds testigo de funcionamiento
 
     /* USER CODE END WHILE */
 

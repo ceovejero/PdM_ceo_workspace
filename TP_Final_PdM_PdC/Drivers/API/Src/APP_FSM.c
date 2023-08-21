@@ -89,12 +89,14 @@ void APP_FSM_update(void)
 							{
 								 	 //sprintf(lcdString, "TP Final");
 									 lcd_clear();
-									 lcd_put_cur(0, 0);
-									 lcd_send_string (initMessageRow1);
+									 //lcd_put_cur(0, 0);
+									 //lcd_send_string (initMessageRow1);
+									 lcd_write_row_col(initMessageRow1, 0, 0);
 
 									 //sprintf(lcdString, "PdM - PdC");
-									 lcd_put_cur(1, 0);
-									 lcd_send_string (initMessageRow2);
+									 //lcd_put_cur(1, 0);
+									 //lcd_send_string (initMessageRow2);
+									 lcd_write_row_col(initMessageRow2, 1, 0);
 									 while(!delayRead(&delayInitApp))			//Espera (No bloqueante) de 2 seg para q sea visible el mensaje Presentacion
 									 {}
 
@@ -141,11 +143,13 @@ void APP_FSM_update(void)
 							{
 								prev_tempC = tempC;
 								lcd_clear();
-								lcd_put_cur(0, 0);
-								lcd_send_string ("Tx Data 4 Graph:");
-								lcd_put_cur(1, 0);
+								//lcd_put_cur(0, 0);
+								//lcd_send_string ("Tx Data 4 Graph:");
+								lcd_write_row_col( "Tx Data 4 Graph:", 0, 0);
 								sprintf(lcdString, "Temp: %3.3f C",tempC);
-								lcd_send_string (lcdString);
+								//lcd_put_cur(1, 0);
+								//lcd_send_string (lcdString);
+								lcd_write_row_col( lcdString, 1, 0);
 								prevState = GRAPH_APP_STATE;
 							}
 						sprintf(uartString, "%3.2f\n",tempC);

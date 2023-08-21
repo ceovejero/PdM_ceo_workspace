@@ -103,7 +103,7 @@ float ds18b20_read_temp(void)
 				ds18b20_write_cmd (SKIP_ROM);  // skip ROM // transmite que el siguiente comando sera para todos los presentes en el bus
 				ds18b20_write_cmd (READ_SCRATCHPAD);  // Read Scratchpad - Acceso de lectura a los datos de conversion
 
-				temp_l = ds18b20_read();
+				temp_l = ds18b20_read();	// Las lecturas capturan Nibble bajo y alto para luego conformar el Byte de dato de temperatura.
 				temp_h = ds18b20_read();
 				temp = (temp_h<<8)|temp_l;
 				temperature = (float)temp/16;

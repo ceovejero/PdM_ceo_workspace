@@ -2,7 +2,7 @@
  * API_LCD_I2C.h
  *
  *  Created on: 7 ago. 2023
- *      Author: CEO
+ *      Author: Contrucción del código usando varias fuentes de internet
  */
 
 #ifndef API_INC_API_LCD_I2C_H_

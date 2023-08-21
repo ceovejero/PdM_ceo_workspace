@@ -87,17 +87,10 @@ void APP_FSM_update(void)
 				case INIT_APP_STATE:
 						if(displayInit_flag)
 							{
-								 	 //sprintf(lcdString, "TP Final");
-									 lcd_clear();
-									 //lcd_put_cur(0, 0);
-									 //lcd_send_string (initMessageRow1);
-									 lcd_write_row_col(initMessageRow1, 0, 0);
-
-									 //sprintf(lcdString, "PdM - PdC");
-									 //lcd_put_cur(1, 0);
-									 //lcd_send_string (initMessageRow2);
-									 lcd_write_row_col(initMessageRow2, 1, 0);
-									 while(!delayRead(&delayInitApp))			//Espera (No bloqueante) de 2 seg para q sea visible el mensaje Presentacion
+									lcd_clear();
+									lcd_write_row_col(initMessageRow1, 0, 0);
+									lcd_write_row_col(initMessageRow2, 1, 0);
+									while(!delayRead(&delayInitApp))			//Espera (No bloqueante) de 2 seg para q sea visible el mensaje Presentacion
 									 {}
 
 								sprintf(uartString, "%s\n\r %s\n\r",initMessageRow1,initMessageRow2);
@@ -117,21 +110,16 @@ void APP_FSM_update(void)
 						 	 {
 								prev_tempC = tempC;
 								lcd_clear();
-								//lcd_put_cur(0, 0);
-								//lcd_send_string ("Visualizando:");
 								lcd_write_row_col( "Visualizando:", 0, 0);
-
 								sprintf(lcdString, "Temp: %3.3f C",tempC);
-								//lcd_put_cur(1, 1);
-								//lcd_send_string (lcdString);
 								lcd_write_row_col(lcdString, 1, 1);
 								prevState = DISPLAY_APP_STATE;
 						 	 }
 						sprintf(uartString, "Temp: %3.2f C\n\r",tempC);
 						uartSendString((uint8_t *) uartString);
 
-						if (readKey())  // control de tiempo
-							{// padado el tiempo de
+						if (readKey())  // control de pulsado de boton
+							{
 								actualAppState = GRAPH_APP_STATE;
 							}
 
@@ -143,20 +131,16 @@ void APP_FSM_update(void)
 							{
 								prev_tempC = tempC;
 								lcd_clear();
-								//lcd_put_cur(0, 0);
-								//lcd_send_string ("Tx Data 4 Graph:");
 								lcd_write_row_col( "Tx Data 4 Graph:", 0, 0);
 								sprintf(lcdString, "Temp: %3.3f C",tempC);
-								//lcd_put_cur(1, 0);
-								//lcd_send_string (lcdString);
 								lcd_write_row_col( lcdString, 1, 0);
 								prevState = GRAPH_APP_STATE;
 							}
 						sprintf(uartString, "%3.2f\n",tempC);
 						uartSendString((uint8_t *) uartString);
 
-						if (readKey())  // control de tiempo
-							{// padado el tiempo de
+						if (readKey())  // control de pulsado de boton
+							{
 								actualAppState = DISPLAY_APP_STATE;
 							}
 				break;

@@ -90,14 +90,14 @@ float ds18b20_read_temp(void)
 	uint8_t check = 2;
 	check = ds18b20_init ();
 
-	if(ds18b20_cmd_flag == FALSE)
+	if(ds18b20_cmd_flag == FALSE)  // la bandera alterna entre  DOS procesos INICIO de CONVERSION -  LECTURA DE DATOS
 	{
 		delayInit(&sensorTimed, SENSOR_PERIOD);
 		ds18b20_write_cmd (SKIP_ROM);  // skip ROM  - pagina 11 del DAtasheet
 		ds18b20_write_cmd (CONVERT_T);  // convert t - Inicia conversion
 		ds18b20_cmd_flag = TRUE;
 	}
-	else if(delayRead(&sensorTimed))   // Delay (800us);
+	else if(delayRead(&sensorTimed))   // Delay (800us);   // LECTURA DE DATOS
 			{
 				ds18b20_init ();
 				ds18b20_write_cmd (SKIP_ROM);  // skip ROM // transmite que el siguiente comando sera para todos los presentes en el bus

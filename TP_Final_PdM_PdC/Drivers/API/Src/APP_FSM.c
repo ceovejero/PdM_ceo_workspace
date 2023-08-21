@@ -95,7 +95,7 @@ void APP_FSM_update()
 									 //sprintf(lcdString, "PdM - PdC");
 									 lcd_put_cur(1, 0);
 									 lcd_send_string (initMessageRow2);
-									 while(!delayRead(&delayInitApp))			//Espera (No b.oqueante) de 2 seg para q sea visible el mensaje Presentacion
+									 while(!delayRead(&delayInitApp))			//Espera (No bloqueante) de 2 seg para q sea visible el mensaje Presentacion
 									 {}
 
 								sprintf(uartString, "%s\n\r %s\n\r",initMessageRow1,initMessageRow2);
@@ -128,12 +128,8 @@ void APP_FSM_update()
 						if (readKey())  // control de tiempo
 							{// padado el tiempo de
 								actualAppState = GRAPH_APP_STATE;
-
 							}
-							//else // si se detecta estado inestable del pulsador
-							//{
-							//	actualState = BUTTON_UP;   //regreso al estado previo
-							//}
+
 				break;
 				case GRAPH_APP_STATE:
 						debounceFSM_update();
@@ -155,7 +151,6 @@ void APP_FSM_update()
 						if (readKey())  // control de tiempo
 							{// padado el tiempo de
 								actualAppState = DISPLAY_APP_STATE;
-
 							}
 				break;
 				default:

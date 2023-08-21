@@ -39,6 +39,46 @@ static float temperature=0;
 
 
 
+
+
+//================== Funciones Privadas ===========================
+
+/**
+ * Funcion de configuracion del GPIO - Input - para la comunicacion.
+ *
+ * @param  None
+ * @retval None
+ */
+static void gpio_set_input (void);
+/**
+ * Funcion de configuracion del GPIO - Output - para la comunicacion.
+ *
+ * @param  None
+ * @retval None
+ */
+static void gpio_set_output (void);
+
+/**
+ * Funcion de Escritura de comando para  Sensor DS18B20.
+ *
+ * @param  uint8_t COMMAND
+ * @retval  None
+ */
+static void ds18b20_write_cmd (uint8_t data);
+/**
+ * Funcion de Lectura de Nibble data desde el  Sensor DS18B20.
+ *
+ * @param None
+ * @retval  uint8_t Data from Sensor DS18B20 (Nibble)
+ */
+static uint8_t ds18b20_read (void);
+
+//===============================================================
+
+
+
+
+//================== Funciones Publicas ===========================
 /**
  * Funcion de lectura de temperatura.
  *
@@ -83,35 +123,6 @@ float ds18b20_read_temp(void)
 
 
 /**
- * Funcion de configuracion del GPIO - Input - para la comunicacion.
- *
- * @param  None
- * @retval None
- */
-void gpio_set_input (void)
-{
-  GPIO_InitStruct.Pin = COMM_PIN;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_PULLUP;
-  HAL_GPIO_Init(COMM_PORT, &GPIO_InitStruct);
-}
-
-/**
- * Funcion de configuracion del GPIO - Output - para la comunicacion.
- *
- * @param  None
- * @retval None
- */
-void gpio_set_output (void)
-{
-  GPIO_InitStruct.Pin = COMM_PIN;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(COMM_PORT, &GPIO_InitStruct);
-}
-
-/**
  * Funcion de Inicializacion de Comunicacion con Sensor DS18B20.
  *
  * @param  None
@@ -140,6 +151,40 @@ uint8_t ds18b20_init (void)
 	}
 }
 
+//===============================================================
+
+
+//================== Desarrollo de Funciones Privadas ===========================
+
+/**
+ * Funcion de configuracion del GPIO - Input - para la comunicacion.
+ *
+ * @param  None
+ * @retval None
+ */
+static void gpio_set_input (void)
+{
+  GPIO_InitStruct.Pin = COMM_PIN;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(COMM_PORT, &GPIO_InitStruct);
+}
+
+/**
+ * Funcion de configuracion del GPIO - Output - para la comunicacion.
+ *
+ * @param  None
+ * @retval None
+ */
+static void gpio_set_output (void)
+{
+  GPIO_InitStruct.Pin = COMM_PIN;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(COMM_PORT, &GPIO_InitStruct);
+}
+
 
 /**
  * Funcion de Escritura de comando para  Sensor DS18B20.
@@ -147,7 +192,7 @@ uint8_t ds18b20_init (void)
  * @param  uint8_t COMMAND
  * @retval  None
  */
-void ds18b20_write_cmd (uint8_t data)
+static void ds18b20_write_cmd (uint8_t data)
 {
 	gpio_set_output ();   // set as output
 
@@ -186,7 +231,7 @@ void ds18b20_write_cmd (uint8_t data)
  * @param None
  * @retval  uint8_t Data from Sensor DS18B20 (Nibble)
  */
-uint8_t ds18b20_read (void)
+static uint8_t ds18b20_read (void)
 {
 	uint8_t value=0;
 	gpio_set_input ();

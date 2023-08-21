@@ -98,7 +98,7 @@ void APP_FSM_update(void)
 
 								displayInit_flag = FALSE;
 							}
-						if (delayRead(&delayInitApp))
+						if (delayRead(&delayInitApp)) // Verificaa el tiempo de DEMORA para realizar el Cambio al siguiente estado
 							{
 								actualAppState = DISPLAY_APP_STATE; //estado siguiente
 							}
@@ -118,7 +118,7 @@ void APP_FSM_update(void)
 						sprintf(uartString, "Temp: %3.2f C\n\r",tempC);
 						uartSendString((uint8_t *) uartString);
 
-						if (readKey())  // control de pulsado de boton
+						if (readKey())  // Verifica el pulsado de Boton de usuario para realizar el Cambio de estado
 							{
 								actualAppState = GRAPH_APP_STATE;
 							}
@@ -139,7 +139,7 @@ void APP_FSM_update(void)
 						sprintf(uartString, "%3.2f\n",tempC);
 						uartSendString((uint8_t *) uartString);
 
-						if (readKey())  // control de pulsado de boton
+						if (readKey()) // Verifica el pulsado de Boton de usuario para realizar el Cambio de estado
 							{
 								actualAppState = DISPLAY_APP_STATE;
 							}

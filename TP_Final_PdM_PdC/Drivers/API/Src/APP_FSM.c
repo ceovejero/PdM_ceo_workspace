@@ -115,11 +115,14 @@ void APP_FSM_update(void)
 						 	 {
 								prev_tempC = tempC;
 								lcd_clear();
-								lcd_put_cur(0, 0);
-								lcd_send_string ("Visualizando:");
-								lcd_put_cur(1, 1);
+								//lcd_put_cur(0, 0);
+								//lcd_send_string ("Visualizando:");
+								lcd_write_row_col( "Visualizando:", 0, 0);
+
 								sprintf(lcdString, "Temp: %3.3f C",tempC);
-								lcd_send_string (lcdString);
+								//lcd_put_cur(1, 1);
+								//lcd_send_string (lcdString);
+								lcd_write_row_col(lcdString, 1, 1);
 								prevState = DISPLAY_APP_STATE;
 						 	 }
 						sprintf(uartString, "Temp: %3.2f C\n\r",tempC);

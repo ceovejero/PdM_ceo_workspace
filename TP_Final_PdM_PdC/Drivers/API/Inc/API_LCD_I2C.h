@@ -38,5 +38,7 @@ void lcd_clear (void);
 void lcd_put_cur(int row, int col);
 
 
+void lcd_write_row_col(char *str, int row, int col);
+
 
 #endif /* API_INC_API_LCD_I2C_H_ */

@@ -112,7 +112,13 @@ void lcd_put_cur(int row, int col)
     lcd_send_cmd (col);
 }
 
-
+/**
+  * @brief de envio de Cadena de Caracteres al LCD y  de posicionamiento de cursor en LCD
+  * @param char *str
+  * @param int Filas
+  * @param int Columnas
+  * @retval None
+  */
 void lcd_write_row_col(char *str, int row, int col)
 {
 	lcd_put_cur( row,  col);
